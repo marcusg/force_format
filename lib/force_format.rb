@@ -1,5 +1,3 @@
 require "force_format/version"
-
-module ForceFormat
-  # Your code goes here...
-end
+require 'force_format/railitie'
+require 'force_format/controller_access'
