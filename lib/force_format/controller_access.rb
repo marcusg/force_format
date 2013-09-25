@@ -15,10 +15,17 @@ module ControllerAccess
       raise UnsupportedFormatsError.new("There is no support for #{unsupported} format") if unsupported.any?
 
       self.send(:before_filter, opts.slice(:only, :except, :if, :unless)) do |controller|
+        return if controller.instance_variable_get("@_skip_force_format_filter") == true
         format = controller.request.format
         unless forced_formats.include?(format.try(:to_sym))
           raise ActionController::RoutingError, "Format '#{format}' not supported for #{request.path.inspect}"
         end
+      end
+    end
+
+    def skip_force_format_filter(opts={})
+      self.send(:prepend_before_filter, opts.slice(:only, :except, :if, :unless)) do |controller|
+        controller.instance_variable_set("@_skip_force_format_filter", true)
       end
     end
 
