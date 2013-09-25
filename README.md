@@ -1,9 +1,16 @@
 # force_format
 
-Define the formats your Rails application should respond to.
+Define the formats your Rails application should respond to within your controllers.
 Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...).
-Unfortunately this will raise Errors if the template for the given format can not be found.
-This is where ```force_format``` joins the game...
+Unfortunately this will raise errors if the template for the given format can not be found.
+This is where ```force_format``` joins the game.
+
+
+## Requirements
+
+```rails (3.2.x)```
+
+(This gem is tested with Rails 3.2.x only, but other versions may work too.)
 
 ## Installation
 
@@ -22,11 +29,14 @@ Or install it yourself as:
 ## Usage
 
 Include the ```force_format_filter``` method in your controllers.
-The important param is the ```:for => [:my, :formats]```
+The important param is the ```:for => [:my, :formats]```. 
+With that given array of fomat types you can define the formats the 
+action should respond to (and hopefully find a template).
 In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...```
 and ```:unless => ...``` parameters like the Rails filters.
 
-    ```
+
+
     class PagesController < ApplicationController
       force_format_filter :for => [:html, :js], :only => :index
 
@@ -34,13 +44,12 @@ and ```:unless => ...``` parameters like the Rails filters.
       end
     end
 
-    ```
 
 By default ```force_format``` raises an ```ActionController::RoutingError```
 if a requested format is not specified via ```:for => []```. It should be easy to
 rescue from this exception, for example in your ```application_controller.rb```:
 
-    ```
+   
     class ApplicationController < ActionController::Base
 
       rescue_from ActionController::RoutingError, :with => :render_error
@@ -50,7 +59,6 @@ rescue from this exception, for example in your ```application_controller.rb```:
       end
     end
 
-    ```
 
 
 ## TODO
