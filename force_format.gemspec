@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ForceFormat::VERSION
   spec.authors       = ["Marcus Geißler\n"]
   spec.email         = ["marcus3006@gmail.com"]
-  spec.description   = %q{Define the formats your Rails application should respond to}
+  spec.description   = %q{Define the formats your Rails application should respond to in your controllers}
   spec.summary       = %q{Forcing the format Rails controllers should respond to}
   spec.homepage      = "https://github.com/marcusg/force_format"
   spec.license       = "MIT"
@@ -19,10 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency 'rspec-rails'
-  spec.add_development_dependency 'shoulda-matchers'
+  spec.add_development_dependency "rake", '~> 10.1'
+  spec.add_development_dependency 'rspec-rails', '~> 2.0'
+  spec.add_development_dependency 'shoulda-matchers', '~> 2.4'
   spec.add_development_dependency "sqlite3"
 
-  spec.add_dependency "rails", "~> 3.2.14"
+  spec.add_dependency "rails", "~> 3.2"
 end

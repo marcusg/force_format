@@ -1,8 +1,8 @@
 # force_format
 
-Define the formats your Rails application should respond to. 
-Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...). 
-Unfortunately this will raise Errors if the template for the given format can not be found. 
+Define the formats your Rails application should respond to.
+Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...).
+Unfortunately this will raise Errors if the template for the given format can not be found.
 This is where ```force_format``` joins the game...
 
 ## Installation
@@ -21,41 +21,43 @@ Or install it yourself as:
 
 ## Usage
 
-Include the ```force_format_filter``` method in your controllers. 
+Include the ```force_format_filter``` method in your controllers.
 The important param is the ```:for => [:my, :formats]```
-In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...``` 
-and ```:unless => ...``` parameters like the Rails filters. 
+In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...```
+and ```:unless => ...``` parameters like the Rails filters.
 
     ```
     class PagesController < ApplicationController
       force_format_filter :for => [:html, :js], :only => :index
-      
+
       def index
       end
     end
-    
+
     ```
-    
-By default ```force_format``` raises an ```ActionController::RoutingError``` 
-if a requested format is not specified via ```:for => []```. It should be easy to 
+
+By default ```force_format``` raises an ```ActionController::RoutingError```
+if a requested format is not specified via ```:for => []```. It should be easy to
 rescue from this exception, for example in your ```application_controller.rb```:
 
     ```
     class ApplicationController < ActionController::Base
 
       rescue_from ActionController::RoutingError, :with => :render_error
-      
+
       def render_error
         # handle it
       end
     end
-    
+
     ```
 
 
 ## TODO
-1. more tests
-2. ability to skip before filters
+1. More tests
+2. Ability to skip before filters
+3. More robust params checking
+4. Custom exception
 
 
 ## Contributing
