@@ -23,7 +23,8 @@ Or install it yourself as:
 
 Include the ```force_format_filter``` method in your controllers. 
 The important param is the ```:for => [:my, :formats]```
-In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...``` and ```:unless => ...``` parameters like the Rails filters. 
+In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...``` 
+and ```:unless => ...``` parameters like the Rails filters. 
 
     ```
     class PagesController < ApplicationController
@@ -34,6 +35,23 @@ In addition it accepts ```:only => ...```, ```:except => ...```, ```:if => ...``
     end
     
     ```
+    
+By default ```force_format``` raises an ```ActionController::RoutingError``` 
+if a requested format is not specified via ```:for => []```. It should be easy to 
+rescue from this exception, for example in your ```application_controller.rb```:
+
+    ```
+    class ApplicationController < ActionController::Base
+
+      rescue_from ActionController::RoutingError, :with => :render_error
+      
+      def render_error
+        # handle it
+      end
+    end
+    
+    ```
+
 
 ## TODO
 1. more tests
