@@ -18,5 +18,5 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
-tmp
-.rvmrc
+tmp/spec/dummy/db/test.sqlite3
+/spec/dummy/log/test.log
