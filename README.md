@@ -28,6 +28,8 @@ Or install it yourself as:
 
 ## Usage
 
+#### Basics
+
 Include the ```force_format_filter``` method in your controllers.
 The important param is the ```:for => [:my, :formats]```. 
 With that given array of fomat types you can define the formats the 
@@ -46,6 +48,8 @@ and ```:unless => ...``` parameters like the Rails filters.
     
 If you want to skip the filter in inherited controllers, use the ```skip_force_format_filter``` method. 
 It accepts the same parameters the ```force_format_filter``` methods except ```:for => ...```.
+
+#### And more options...
 
 Maybe you want to define the formats more granular, for example different per action. 
 To accomplish this, pass an hash with action names and required formats. Add a *:default* key with formats 
@@ -66,6 +70,8 @@ for actions that are not specified directly.
     end
     
 
+#### Exceptions
+
 By default ```force_format``` raises an ```ActionController::RoutingError```
 if a requested format matches none of the attributes specified via ```:for => ...```. 
 It should be easy to rescue from this exception, for example in your ```application_controller.rb```:
@@ -80,14 +86,19 @@ It should be easy to rescue from this exception, for example in your ```applicat
       end
     end
     
+
+You can pass an custom exception lambda to the ```force_format_filter``` method for a better error handling. 
+
+    class PagesController < ApplicationController
+      force_format_filter :for => :html, :exception => lambda { |msg| raise(MyApp::AwesomeException.new(msg)) }
+    end
+
 NOTE: Call the method ```force_format_filter``` only once per controller! 
 If you call it multiple times, the last one would be used.
 
-
 ## TODO
 1. More tests
-3. More robust params checking
-4. Custom exception
+2. More robust params checking
 
 
 ## Contributing
