@@ -43,6 +43,9 @@ and ```:unless => ...``` parameters like the Rails filters.
       def index
       end
     end
+    
+If you want to skip the filter in inherited controllers, use the ```skip_force_format_filter``` method. 
+It accepts the same parameters the ```force_format_filter``` methods except ```:for => ...```.
 
 
 By default ```force_format``` raises an ```ActionController::RoutingError```
@@ -63,7 +66,6 @@ rescue from this exception, for example in your ```application_controller.rb```:
 
 ## TODO
 1. More tests
-2. Ability to skip before filters
 3. More robust params checking
 4. Custom exception
 
