@@ -79,7 +79,9 @@ It should be easy to rescue from this exception, for example in your ```applicat
         # handle it
       end
     end
-
+    
+NOTE: Call the method ```force_format_filter``` only once per controller! 
+If you call it multiple times, the last one would be used.
 
 
 ## TODO
