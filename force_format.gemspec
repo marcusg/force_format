@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-rails', '~> 2.0'
   spec.add_development_dependency 'shoulda-matchers', '~> 2.4'
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "pry"
 
   spec.add_dependency "rails", "~> 3.2"
 end
