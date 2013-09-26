@@ -22,6 +22,7 @@ module ControllerAccess
 
   def force_format_filter_method
     force_formats = force_format_extract_options_from_filter_chain
+    return unless force_formats
     unsupported = force_formats - FORCE_FORMAT_TYPES
     raise UnsupportedFormatsError.new("There is no support for #{unsupported} format") if unsupported.any?
     format = request.format
@@ -33,7 +34,18 @@ module ControllerAccess
   def force_format_extract_options_from_filter_chain
     filter = self._process_action_callbacks.find { |f| f.filter == :force_format_filter_method }
     force_formats = filter.options[:for]
-    force_formats.is_a?(Array) ? force_formats : (force_formats.is_a?(Symbol) ? [force_formats] : FORCE_FORMAT_DEFAULT_TYPES)
+
+    if force_formats.is_a? (Array || Symbol)
+      [*force_formats]
+    elsif force_formats.is_a? Hash
+      if force_formats[self.action_name.to_sym]
+        [*force_formats[self.action_name.to_sym]]
+      else
+        force_formats[:default] ? [*force_formats[:default]] : nil
+      end
+    else
+      FORCE_FORMAT_DEFAULT_TYPES
+    end
   end
 
 end
