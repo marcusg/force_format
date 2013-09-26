@@ -6,6 +6,9 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'force_format'
 require 'pry'
+require_relative '../lib/force_format/errors'
+
+include ForceFormat::Errors
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

@@ -341,4 +341,51 @@ describe PagesController, :type => :controller do
   end
 
 
+  context "force_format_filter is used with unsupported format" do
+
+    controller do
+      send "force_format_filter", :for => {:index => :what}
+
+      def index
+        render "with_js"
+      end
+    end
+
+    it "should respond with RoutingError for html" do
+      expect { get "index", :format => :html }.to raise_error(UnsupportedFormatsError)
+    end
+
+  end
+
+  context "force_format_filter is used with unsupported format" do
+
+    controller do
+      send "force_format_filter", :for => {:index => :what}
+
+      def index
+        render "with_js"
+      end
+    end
+
+    it "should respond with RoutingError for html" do
+      expect { get "index", :format => :html }.to raise_error(UnsupportedFormatsError)
+    end
+
+  end
+
+  context "force_format_filter is used with a custom exception" do
+
+    controller do
+      send "force_format_filter", :for => [:js], :exception => lambda { |o| raise(ActiveRecord::RecordNotFound, o) }
+
+      def index
+        render "with_js"
+      end
+    end
+
+    it "should respond with RoutingError for html" do
+      expect { get "index", :format => :html }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+  end
 end
