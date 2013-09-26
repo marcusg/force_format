@@ -47,10 +47,28 @@ and ```:unless => ...``` parameters like the Rails filters.
 If you want to skip the filter in inherited controllers, use the ```skip_force_format_filter``` method. 
 It accepts the same parameters the ```force_format_filter``` methods except ```:for => ...```.
 
+Maybe you want to define the formats more granular, for example different per action. 
+To accomplish this, pass an hash with action names and required formats. Add a *:default* key with formats 
+for actions that are not specified directly. 
+
+
+    class PagesController < ApplicationController
+      force_format_filter :for => {:index => :js, :default => [:json, :html]}
+
+      def index
+        # should respond with js
+      end
+      
+      def new
+        # should respond with json or html
+      end
+
+    end
+    
 
 By default ```force_format``` raises an ```ActionController::RoutingError```
-if a requested format is not specified via ```:for => []```. It should be easy to
-rescue from this exception, for example in your ```application_controller.rb```:
+if a requested format matches none of the attributes specified via ```:for => ...```. 
+It should be easy to rescue from this exception, for example in your ```application_controller.rb```:
 
    
     class ApplicationController < ActionController::Base
