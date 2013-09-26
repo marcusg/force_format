@@ -2,44 +2,38 @@ require_relative "errors"
 
 module ControllerAccess
   extend ActiveSupport::Concern
+  FORCE_FORMAT_TYPES = [:html, :js, :json, :pdf, :csv, :zip, :xml]
+  FORCE_FORMAT_DEFAULT_TYPES = [:html]
 
   module ClassMethods
     include ForceFormat::Errors
-    FORCE_FORMAT_TYPES = [:html, :js, :json, :pdf, :csv, :zip, :xml]
-    FORCE_FORMAT_DEFAULT_TYPES = [:html]
 
     def force_format_filter(opts={})
-      forced_formats = extract_options(opts)
-
-      unsupported = forced_formats - FORCE_FORMAT_TYPES
-      raise UnsupportedFormatsError.new("There is no support for #{unsupported} format") if unsupported.any?
-
-      self.send(:before_filter, opts.slice(:only, :except, :if, :unless)) do |controller|
-        return if controller.instance_variable_get("@_skip_force_format_filter") == true
-        format = controller.request.format
-        unless forced_formats.include?(format.try(:to_sym))
-          raise ActionController::RoutingError, "Format '#{format}' not supported for #{request.path.inspect}"
-        end
-      end
+      send(:before_filter, :force_format_filter_method, opts.slice(:only, :except, :if, :unless, :for))
     end
 
     def skip_force_format_filter(opts={})
-      self.send(:prepend_before_filter, opts.slice(:only, :except, :if, :unless)) do |controller|
-        controller.instance_variable_set("@_skip_force_format_filter", true)
-      end
-    end
-
-    private
-
-    def extract_options(opts)
-      if opts[:for].is_a?(Array)
-        opts[:for]
-      elsif opts[:for].is_a?(Symbol)
-        [opts[:for]]
-      else
-        FORCE_FORMAT_DEFAULT_TYPES
-      end
+      send(:skip_before_filter, :force_format_filter_method, opts.slice(:only, :except, :if, :unless))
     end
 
   end
+
+  private
+
+  def force_format_filter_method
+    force_formats = force_format_extract_options_from_filter_chain
+    unsupported = force_formats - FORCE_FORMAT_TYPES
+    raise UnsupportedFormatsError.new("There is no support for #{unsupported} format") if unsupported.any?
+    format = request.format
+    unless force_formats.include?(format.try(:to_sym))
+      raise ActionController::RoutingError, "Format '#{format}' not supported for #{request.path.inspect}"
+    end
+  end
+
+  def force_format_extract_options_from_filter_chain
+    filter = self._process_action_callbacks.find { |f| f.filter == :force_format_filter_method }
+    force_formats = filter.options[:for]
+    force_formats.is_a?(Array) ? force_formats : (force_formats.is_a?(Symbol) ? [force_formats] : FORCE_FORMAT_DEFAULT_TYPES)
+  end
+
 end
