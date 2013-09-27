@@ -5,16 +5,19 @@ module ControllerAccess
   FORCE_FORMAT_TYPES = [:html, :js, :json, :pdf, :csv, :zip, :xml]
   FORCE_FORMAT_DEFAULT_TYPES = [:html]
   FORCE_FORMAT_EXCEPTION = lambda { |o| raise(ActionController::RoutingError, o) }
+  FORCE_FORMAT_WILDCARD = "*/*"
 
   module ClassMethods
     include ForceFormat::Errors
 
     def force_format_filter(opts={})
-      send(:before_filter, :force_format_filter_method, opts.slice(:only, :except, :if, :unless, :for, :exception))
+      parsed = opts.slice(:only, :except, :if, :unless, :for, :exception, :skip_wildcard)
+      send(:before_filter, :force_format_filter_method, parsed)
     end
 
     def skip_force_format_filter(opts={})
-      send(:skip_before_filter, :force_format_filter_method, opts.slice(:only, :except, :if, :unless))
+      parsed = opts.slice(:only, :except, :if, :unless)
+      send(:skip_before_filter, :force_format_filter_method, parsed)
     end
 
   end
@@ -26,6 +29,11 @@ module ControllerAccess
     return unless force_formats
     unsupported = force_formats - FORCE_FORMAT_TYPES
     raise UnsupportedFormatsError.new("There is no support for #{unsupported} format") if unsupported.any?
+
+    if request.format.to_s == FORCE_FORMAT_WILDCARD and not force_format_skip_wildcard_rewrite?
+      request.format = :html
+    end
+
     format = request.format
     unless force_formats.include?(format.try(:to_sym))
       force_format_extract_exception.call("Format '#{format}' not supported for #{request.path.inspect}")
@@ -50,6 +58,14 @@ module ControllerAccess
     else
       FORCE_FORMAT_DEFAULT_TYPES
     end
+  end
+
+  def force_format_extract_wildcard_option
+    force_format_load_filter_chain.options[:skip_wildcard]
+  end
+
+  def force_format_skip_wildcard_rewrite?
+    force_format_extract_wildcard_option
   end
 
   def force_format_extract_exception
