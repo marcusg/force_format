@@ -1,5 +1,8 @@
 # force_format
 
+[![Gem Version](https://badge.fury.io/rb/force_format.png)](http://badge.fury.io/rb/force_format)
+[![Code Climate](https://codeclimate.com/github/marcusg/force_format.png)](https://codeclimate.com/github/marcusg/force_format)
+
 Define the formats your Rails application should respond to within your controllers.
 Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...).
 Unfortunately this will raise errors if the template for the given format can not be found.
