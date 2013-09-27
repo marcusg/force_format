@@ -1,5 +1,5 @@
-require_relative "controller_access"
-require_relative "view_patch"
+require_relative "controller"
+require_relative "view"
 
 module ForceFormat
 
@@ -7,13 +7,13 @@ module ForceFormat
 
     initializer "force_format.controller" do
       ActiveSupport.on_load :action_controller do
-        include ControllerAccess
+        include Controller
       end
     end
 
     initializer "force_format.view" do
       ActiveSupport.on_load :action_view do
-        include ViewPatch
+        include View
       end
     end
 

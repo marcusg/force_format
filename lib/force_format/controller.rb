@@ -1,7 +1,7 @@
 require_relative "errors"
 
 module ForceFormat
-  module ControllerAccess
+  module Controller
     extend ActiveSupport::Concern
     FORCE_FORMAT_TYPES = [:html, :js, :json, :pdf, :csv, :zip, :xml]
     FORCE_FORMAT_DEFAULT_TYPES = [:html]

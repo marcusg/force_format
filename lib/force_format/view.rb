@@ -1,5 +1,5 @@
 module ForceFormat
-  module ViewPatch
+  module View
     class ActionView::LookupContext
       def formats=(values)
         if values
