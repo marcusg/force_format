@@ -1,6 +1,7 @@
 language: ruby
 
 script: "bundle exec rake spec"
+add bundler_args: ''
 
 rvm:
   - 1.9.3
@@ -13,3 +14,10 @@ env:
 gemfile:
   - gemfiles/3.2.gemfile
   - gemfiles/4.0.gemfile
+
+matrix:
+  exclude:
+    - env: "RAILS_VERSION=3.2"
+      gemfile: gemfiles/4.0.gemfile
+    - env: "RAILS_VERSION=4.0"
+      gemfile: gemfiles/3.2.gemfile
