@@ -8,9 +8,7 @@ This is where ```force_format``` joins the game.
 
 ## Requirements
 
-```rails (3.2.x)```
-
-(This gem is tested with Rails 3.2.x only, but other versions may work too.)
+```rails >= 3.2```
 
 ## Installation
 
@@ -46,6 +44,16 @@ and ```:unless => ...``` parameters like the Rails filters.
       end
     end
     
+
+#### Supported format types
+For the moment the following (MIME-)types are available.
+
+    ForceFormat::Controller::FORCE_FORMAT_TYPES 
+    => [:html, :js, :json, :pdf, :csv, :zip, :xml]
+    
+
+#### Skip the filter
+
 If you want to skip the filter in inherited controllers, use the ```skip_force_format_filter``` method. 
 It accepts the same parameters the ```force_format_filter``` methods except ```:for => ...```.
 
@@ -70,7 +78,7 @@ for actions that are not specified directly.
     end
     
 
-#### Exceptions
+#### Handling exceptions
 
 By default ```force_format``` raises an ```ActionController::RoutingError```
 if a requested format matches none of the attributes specified via ```:for => ...```. 
@@ -86,6 +94,7 @@ It should be easy to rescue from this exception, for example in your ```applicat
       end
     end
     
+#### Use custom exception
 
 You can pass an custom exception lambda to the ```force_format_filter``` method for a better error handling. 
 
