@@ -93,6 +93,17 @@ You can pass an custom exception lambda to the ```force_format_filter``` method 
       force_format_filter :for => :html, :exception => lambda { |msg| raise(MyApp::AwesomeException.new(msg)) }
     end
 
+
+#### Widcard accept header
+
+If an user agent sets the accept header wildcard like ```*/*``` ```force_format_filter``` would fallback 
+and set the ```request.format``` to *:html*. This is important for access via ```curl``` and I think for the 
+google bot too. If you don't want this behaviour of wildcard rewriting you can set the ```:skip_wildcard``` option.
+
+    class PagesController < ApplicationController
+      force_format_filter :for => :html, :skip_wildcard => true
+    end
+
 NOTE: Call the method ```force_format_filter``` only once per controller! 
 If you call it multiple times, the last one would be used.
 
