@@ -21,3 +21,5 @@ test/version_tmp
 tmp/spec/dummy/db/test.sqlite3
 /spec/dummy/log/test.log
 /spec/dummy/db/test.sqlite3
+/spec/dummy3.2/log/test.log
+/spec/dummy4.0/log/test.log
