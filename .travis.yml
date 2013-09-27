@@ -8,8 +8,8 @@ rvm:
   - 2.0.0
 
 env:
-  - "RAILS_VERSION=3.2"
-  - "RAILS_VERSION=4.0"
+  - RAILS_VERSION=3.2
+  - RAILS_VERSION=4.0
 
 gemfile:
   - gemfiles/3.2.gemfile
@@ -17,7 +17,15 @@ gemfile:
 
 matrix:
   exclude:
-    - env: "RAILS_VERSION=3.2"
+    - rvm: 2.0.0
       gemfile: gemfiles/4.0.gemfile
-    - env: "RAILS_VERSION=4.0"
+      env: RAILS_VERSION=3.2
+    - rvm: 1.9.3
+      gemfile: gemfiles/4.0.gemfile
+      env: RAILS_VERSION=3.2
+    - rvm: 2.0.0
       gemfile: gemfiles/3.2.gemfile
+      env: RAILS_VERSION=4.0
+    - rvm: 1.9.3
+      gemfile: gemfiles/3.2.gemfile
+      env: RAILS_VERSION=4.0
