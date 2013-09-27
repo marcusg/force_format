@@ -1,7 +1,7 @@
 language: ruby
 
 script: "bundle exec rake spec"
-add bundler_args: ''
+bundler_args: ''
 
 rvm:
   - 1.9.3
