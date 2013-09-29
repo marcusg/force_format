@@ -33,7 +33,7 @@ describe PagesController, :type => :controller do
       expect do
         request.env["HTTP_ACCEPT"] = '*/*'
         get "index"
-      end.to raise_error(ActionController::RoutingError)
+      end.to raise_error(UnknownFormat)
     end
 
   end

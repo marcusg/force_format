@@ -1,6 +1,9 @@
 module ForceFormat
   module Errors
-    class UnsupportedFormatsError < StandardError
+    class UnsupportedFormat < StandardError
+    end
+
+    class UnknownFormat < StandardError
     end
   end
 end

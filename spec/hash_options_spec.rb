@@ -27,11 +27,11 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for html" do
-      expect { get "index", :format => :html }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :html }.to raise_error(UnknownFormat)
     end
 
     it "should respond with RoutingError for html" do
-      expect { get "new", :format => :html }.to raise_error(ActionController::RoutingError)
+      expect { get "new", :format => :html }.to raise_error(UnknownFormat)
     end
 
   end
@@ -61,11 +61,11 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for html" do
-      expect { get "index", :format => :html }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :html }.to raise_error(UnknownFormat)
     end
 
     it "should respond with RoutingError for html" do
-      expect { get "new", :format => :html }.to raise_error(ActionController::RoutingError)
+      expect { get "new", :format => :html }.to raise_error(UnknownFormat)
     end
 
   end
@@ -81,8 +81,8 @@ describe PagesController, :type => :controller do
       end
     end
 
-    it "should respond with UnsupportedFormatsError for html" do
-      expect { get "index", :format => :html }.to raise_error(UnsupportedFormatsError)
+    it "should respond with UnsupportedFormat for html" do
+      expect { get "index", :format => :html }.to raise_error(UnsupportedFormat)
     end
 
   end
@@ -97,8 +97,8 @@ describe PagesController, :type => :controller do
       end
     end
 
-    it "should respond with UnsupportedFormatsError for html" do
-      expect { get "index", :format => :html }.to raise_error(UnsupportedFormatsError)
+    it "should respond with UnsupportedFormat for html" do
+      expect { get "index", :format => :html }.to raise_error(UnsupportedFormat)
     end
 
   end

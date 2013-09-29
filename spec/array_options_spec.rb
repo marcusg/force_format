@@ -24,15 +24,15 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for js" do
-      expect { get "index", :format => :js }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :js }.to raise_error(UnknownFormat)
     end
 
     it "should respond with RoutingError for xml" do
-      expect { get "index", :format => :xml }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :xml }.to raise_error(UnknownFormat)
     end
 
     it "should respond with RoutingError for json" do
-      expect { get "index", :format => :json }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :json }.to raise_error(UnknownFormat)
     end
 
   end
@@ -63,11 +63,11 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for xml" do
-      expect { get "index", :format => :xml }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :xml }.to raise_error(UnknownFormat)
     end
 
     it "should respond with RoutingError for json" do
-      expect { get "index", :format => :json }.to raise_error(ActionController::RoutingError)
+      expect { get "index", :format => :json }.to raise_error(UnknownFormat)
     end
 
   end
@@ -85,23 +85,23 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for html" do
-      expect { get "index" }.to raise_error(UnsupportedFormatsError)
+      expect { get "index" }.to raise_error(UnsupportedFormat)
     end
 
     it "should respond with RoutingError for js" do
-      expect { get "index", :format => :js }.to raise_error(UnsupportedFormatsError)
+      expect { get "index", :format => :js }.to raise_error(UnsupportedFormat)
     end
 
     it "should respond with RoutingError for invalid" do
-      expect { get "index", :format => :invalid }.to raise_error(UnsupportedFormatsError)
+      expect { get "index", :format => :invalid }.to raise_error(UnsupportedFormat)
     end
 
     it "should respond with RoutingError for xml" do
-      expect { get "index", :format => :xml }.to raise_error(UnsupportedFormatsError)
+      expect { get "index", :format => :xml }.to raise_error(UnsupportedFormat)
     end
 
     it "should respond with RoutingError for json" do
-      expect { get "index", :format => :json }.to raise_error(UnsupportedFormatsError)
+      expect { get "index", :format => :json }.to raise_error(UnsupportedFormat)
     end
 
   end
