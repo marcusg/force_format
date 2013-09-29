@@ -1,6 +1,7 @@
 # force_format
 
 [![Gem Version](https://badge.fury.io/rb/force_format.png)](http://badge.fury.io/rb/force_format)
+[![Build Status](https://travis-ci.org/marcusg/force_format.png?branch=master)](https://travis-ci.org/marcusg/force_format)
 [![Code Climate](https://codeclimate.com/github/marcusg/force_format.png)](https://codeclimate.com/github/marcusg/force_format)
 [![Dependency Status](https://gemnasium.com/marcusg/force_format.png)](https://gemnasium.com/marcusg/force_format)
 
