@@ -5,11 +5,30 @@
 [![Code Climate](https://codeclimate.com/github/marcusg/force_format.png)](https://codeclimate.com/github/marcusg/force_format)
 [![Dependency Status](https://gemnasium.com/marcusg/force_format.png)](https://gemnasium.com/marcusg/force_format)
 
-Define the formats your Rails application should respond to within your controllers.
-Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...).
-Unfortunately this will raise errors if the template for the given format can not be found.
-This is where ```force_format``` joins the game.
+Define  the formats your Rails application should respond to within your controllers.
 
+## Background
+
+Normally a Rails3 application tries to respond to all kinds of formats (e.g. html, xml, json, ...)
+defined via ```respond_to``` inside the controller. Given the following setup for a controller responding
+to html and javascript requests.
+
+    class PagesController < ApplicationController
+
+      def index
+        respond_to do |format|
+          format.html
+          format.js
+        end
+      end
+    end
+
+All other requests will return a white page with status code 406 (Not Acceptable). FOr some this seems to be a correct behaviour but it may be important for some webapps to render out a error page giving a good description of the error - like 404 pages. In other words: if the action can't handle the requested format render out an error page with an supported format like html.
+
+This is where ```force_format``` joins the game. The gem adds some accessible methods for your controllers based on before_filters. With that you can define the allowed formats for each controller action. If the requested mime-type does not
+match one of the specified formats, ```force_format``` will raise a custom exception wich you can handle on you own (e.g. print out some useful sentences for your users).
+
+Besides this, if you theoretical don't need the ```respond_to``` because you use templates which are rendered by default, you can omit the ```respond_to``` block when using ```force_format```.
 
 ## Requirements
 
@@ -120,6 +139,7 @@ google bot too. If you don't want this behaviour of wildcard rewriting you can s
 
 NOTE: Call the method ```force_format_filter``` only once per controller!
 If you call it multiple times, the last one would be used.
+
 
 ## TODO
 1. More tests
