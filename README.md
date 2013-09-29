@@ -23,7 +23,7 @@ to html and javascript requests.
       end
     end
 
-All other requests will return a white page with status code 406 (Not Acceptable). FOr some this seems to be a correct behaviour but it may be important for some webapps to render out a error page giving a good description of the error - like 404 pages. In other words: if the action can't handle the requested format render out an error page with an supported format like html.
+All other requests will return a white page with status code 406 (Not Acceptable). For some this seems to be a correct behaviour but it may be important for some webapps to render out a error page giving a good description of the error - like 404 pages. In other words: If the action can't handle the requested format, render out an error page with an supported format like html.
 
 This is where ```force_format``` joins the game. The gem adds some accessible methods for your controllers based on before_filters. With that you can define the allowed formats for each controller action. If the requested mime-type does not
 match one of the specified formats, ```force_format``` will raise a custom exception wich you can handle on you own (e.g. print out some useful sentences for your users).
