@@ -6,7 +6,7 @@ require 'force_format/version'
 Gem::Specification.new do |spec|
   spec.name          = "force_format"
   spec.version       = ForceFormat::VERSION
-  spec.authors       = ["Marcus Geißler\n"]
+  spec.author        = "Marcus Geißler"
   spec.email         = ["marcus3006@gmail.com"]
   spec.description   = %q{Define the formats your Rails application should respond to in your controllers}
   spec.summary       = %q{Forcing the format Rails controllers should respond to}
@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "appraisal", "~> 0.5.2"
 
-  spec.add_dependency "rails", ">= 3.2.0"
+  spec.add_dependency "rails", ">= 3.2.0", "<= 4.1"
 end
