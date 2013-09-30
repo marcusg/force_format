@@ -61,15 +61,15 @@ describe PagesController, :type => :controller do
     end
 
     it "should respond with RoutingError for js" do
-      expect { get "index", :format => :js }.to raise_error(UnknownFormat)
+      expect { get "index", :format => :js }.to raise_error(ForceFormat::Errors::UnknownFormat)
     end
 
     it "should respond with RoutingError for xml" do
-      expect { get "index", :format => :xml }.to raise_error(UnknownFormat)
+      expect { get "index", :format => :xml }.to raise_error(ForceFormat::Errors::UnknownFormat)
     end
 
     it "should respond with RoutingError for json" do
-      expect { get "index", :format => :json }.to raise_error(UnknownFormat)
+      expect { get "index", :format => :json }.to raise_error(ForceFormat::Errors::UnknownFormat)
     end
 
 

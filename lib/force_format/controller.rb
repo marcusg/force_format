@@ -5,7 +5,7 @@ module ForceFormat
     extend ActiveSupport::Concern
     FORCE_FORMAT_TYPES = [:html, :js, :json, :pdf, :csv, :zip, :xml]
     FORCE_FORMAT_DEFAULT_TYPES = [:html]
-    FORCE_FORMAT_EXCEPTION = lambda { |o| raise(UnknownFormat.new(o)) }
+    FORCE_FORMAT_EXCEPTION = lambda { |o| raise(ForceFormat::Errors::UnknownFormat.new(o)) }
     FORCE_FORMAT_WILDCARD = "*/*"
 
 
@@ -30,7 +30,7 @@ module ForceFormat
       force_formats = force_format_extract_formats
       return unless force_formats
       unsupported = force_formats - FORCE_FORMAT_TYPES
-      raise UnsupportedFormat.new("There is no support for #{unsupported} format") if unsupported.any?
+      raise ForceFormat::Errors::UnsupportedFormat.new("There is no support for #{unsupported} format") if unsupported.any?
 
       if request.format.to_s == FORCE_FORMAT_WILDCARD and not force_format_skip_wildcard_rewrite?
         request.format = :html
